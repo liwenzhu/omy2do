@@ -53,6 +53,7 @@ h3 {
     bottom: auto;
     background: #ddd;
     border-bottom: 1px solid #999;
+    overflow: initial;
 }
 
 #help {
@@ -117,6 +118,12 @@ h3 {
 #tag-filter .count {
     font-weight: normal;
     padding-left: 2px;
+}
+
+#tag-filter .tag-signin {
+    margin-top: 10px;
+    margin-right: 12px;
+    float: right;
 }
 
 #lists .list {
