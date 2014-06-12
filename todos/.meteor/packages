@@ -12,3 +12,6 @@ insecure
 accounts-ui
 accounts-weibo
 accounts-password
+accounts-github
+accounts-facebook
+accounts-google
