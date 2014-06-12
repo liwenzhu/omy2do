@@ -102,7 +102,7 @@ h3 {
 #tag-filter .label {
     float: left;
     margin-top: 9px;
-    margin-left: 12px;
+    margin-left: 8px;
     margin-right: 8px;
 }
 
@@ -120,10 +120,16 @@ h3 {
     padding-left: 2px;
 }
 
+#tag-filter .tags_frame {
+    overflow: scroll;
+    height: 44px;
+}
+
 #tag-filter .tag-signin {
     margin-top: 10px;
-    margin-right: 12px;
-    float: right;
+    margin-left: 12px;
+    margin-right: 8px;
+    float: left;
 }
 
 #lists .list {
@@ -149,6 +155,11 @@ h3 {
 
 #createList input {
     width: 180px;
+}
+
+#feedback span {
+    font-size: 12px;
+    margin-left: 7px;
 }
 
 #new-todo-box {
