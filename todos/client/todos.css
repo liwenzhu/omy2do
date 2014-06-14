@@ -134,6 +134,24 @@ h3 {
 
 #lists .list {
     padding: 3px 6px;
+    position: relative;
+}
+
+#lists .list .destroy {
+    cursor: pointer;
+    position: absolute;
+    right: 5px;
+    top: 6px;
+    height: 20px;
+    width: 20px;
+}
+
+#lists .list:hover .destroy {
+    background: url('/destroy.png') no-repeat 0 0;
+}
+
+#lists .list .destroy:hover {
+    background-position: 0 -20px;
 }
 
 #lists .selected {
