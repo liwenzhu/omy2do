@@ -89,6 +89,9 @@ Template.lists.events({
   'mousedown .list': function (evt) { // select list
     Router.setList(this._id);
   },
+  'click .destroy': function (evt) {
+    Lists.remove(this._id);
+  },
   'click .list': function (evt) {
     // prevent clicks on <a> from refreshing the page.
     evt.preventDefault();
