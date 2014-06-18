@@ -91,6 +91,9 @@ Template.lists.events({
   },
   'click .destroy': function (evt) {
     Lists.remove(this._id);
+    var list = Lists.findOne({}, {sort: {name: 1}});
+    if (list)
+      Router.setList(list._id);
   },
   'click .list': function (evt) {
     // prevent clicks on <a> from refreshing the page.
