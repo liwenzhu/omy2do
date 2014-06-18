@@ -3,7 +3,8 @@ Lists = new Meteor.Collection("lists");
 
 // Publish complete set of lists to all clients.
 Meteor.publish('lists', function () {
-  return Lists.find();
+  var owner = !!this.userId ? this.userId : 'public';
+  return Lists.find({owner: owner});
 });
 
 
