@@ -108,7 +108,7 @@ Template.lists.events(okCancelEvents(
   '#new-list',
   {
     ok: function (text, evt) {
-      var id = Lists.insert({name: text});
+      var id = Lists.insert({name: text, owner: Meteor.userId()});
       Router.setList(id);
       evt.target.value = "";
     }
