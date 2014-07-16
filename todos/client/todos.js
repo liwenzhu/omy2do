@@ -91,6 +91,9 @@ Template.lists.events({
   },
   'click .destroy': function (evt) {
     Lists.remove(this._id);
+    var list = Lists.findOne({}, {sort: {name: 1}});
+    if (list)
+      Router.setList(list._id);
   },
   'click .list': function (evt) {
     // prevent clicks on <a> from refreshing the page.
@@ -108,7 +111,7 @@ Template.lists.events(okCancelEvents(
   '#new-list',
   {
     ok: function (text, evt) {
-      var id = Lists.insert({name: text});
+      var id = Lists.insert({name: text, owner: Meteor.userId()});
       Router.setList(id);
       evt.target.value = "";
     }
