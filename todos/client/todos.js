@@ -92,6 +92,8 @@ Template.lists.events({
   'click .destroy': function (evt) {
     Lists.remove(this._id);
     var list = Lists.findOne({}, {sort: {name: 1}});
+    console.log('list length:', list.length)
+    console.log('list:', list)
     if (list)
       Router.setList(list._id);
   },
