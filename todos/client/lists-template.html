@@ -1,0 +1,31 @@
+<template name="lists">
+  <h3>Todo Lists (Beta)</h3>
+  {{#if loading}}
+    <div id="lists">Loading...</div>
+  {{else}}
+    <div id="lists">
+      {{#each lists}}
+        <div class="list {{selected}}">
+          {{#if editing}}
+            <div class="edit">
+              <input class="list-name-input" id="list-name-input" type="text" value="{{name}}" />
+            </div>
+          {{else}}
+            <div class="display">
+              <a class="list-name {{name_class}}" href="/{{_id}}">
+                {{name}}
+              </a>
+            </div>
+          {{/if}}
+          <div class="destroy"></div>
+        </div>
+      {{/each}}
+    </div>
+    <div id="createList">
+      <input type="text" id="new-list" placeholder="New list" />
+    </div>
+    <div id="feedback">
+      <span>Feedback: contact2do@gmail.com</span>
+    </div>
+  {{/if}}
+</template>

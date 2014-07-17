@@ -1,0 +1,13 @@
+<template name="tag_filter">
+  <div id="tag-filter" class="tag-list">
+    <div class="tag-signin">{{> loginButtons}}</div>
+    <div class="label">Show:</div>
+    <div class="tags_frame">
+    {{#each tags}}
+      <div class="tag {{selected}}">
+        {{tag_text}} <span class="count">({{count}})</span>
+      </div>
+    {{/each}}
+    </div>
+  </div>
+</template>
