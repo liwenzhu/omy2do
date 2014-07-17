@@ -12,20 +12,47 @@ Meteor.publish('lists', function () {
   return lists;
 });
 
-
-
+Lists.allow({
+	insert: function (userId, doc) {
+		return doc.owner === userId;
+	},
+	update: function (userId, doc) {
+		return doc.owner === userId;
+	},
+	remove: function (userId, doc) {
+		return doc.owner === userId;
+	},
+	fetch: ['owner']
+});
 
 // Todos -- {text: String,
 //           done: Boolean,
 //           tags: [String, ...],
 //           list_id: String,
-//           timestamp: Number}
+//           timestamp: Number,
+//			 owner: String}
 Todos = new Meteor.Collection("todos");
 
 // Publish all items for requested list_id.
 Meteor.publish('todos', function (list_id) {
   check(list_id, String);
   return Todos.find({list_id: list_id});
+});
+
+Todos.allow({
+	insert: function (userId, doc) {
+		var list = Lists.find({owner:userId, list_id: doc.list_id});
+		return !!list;
+	},
+	update: function (userId, doc) {
+		var list = Lists.find({owner:userId, list_id: doc.list_id});
+		return !!list;
+	},
+	remove: function (userId, doc) {
+		var list = Lists.find({owner:userId, list_id: doc.list_id});
+		return !!list;
+	},
+	fetch: ['owner']
 });
 
 function initDatabase() {
