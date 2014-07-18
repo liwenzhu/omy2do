@@ -1,4 +1,4 @@
-<template name="todo_item">
+<!-- <template name="todo_item">
   <li class="todo {{done_class}}">
     {{#if editing}}
       <div class="edit">
@@ -29,4 +29,34 @@
       {{/if}}
     </div>
   </li>
+</template>
+ -->
+<template name="todos_item">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <p>
+                    <span><b>Todos</b> Show:</span>
+                    <span class="label label-primary">All items (12)</span>
+                    <span class="label label-default">Tech (1)</span>
+                    <span class="label label-default">Apple (2)</span>
+                    <span class="label label-default">Learning (1)</span>
+                    <span class="label label-default">Tech (1)</span>
+                    <span class="label label-default">Tech (1)</span>
+                    <span class="label label-default">Tech (1)</span>
+                </p>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="list-group">
+                <a href="#" class="list-group-item">
+                PP, love you!
+                </a>
+                <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+                <a href="#" class="list-group-item">Morbi leo risus</a>
+                <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+                <a href="#" class="list-group-item">Vestibulum at eros</a>
+            </div>
+        </div>
+    </div>
 </template>
