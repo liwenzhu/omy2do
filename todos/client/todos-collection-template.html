@@ -1,14 +1,14 @@
 <template name="todos_collection">
 	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title">Group</h3>
-		</div>
-		<div class="panel-body">
-			<div class="list-group">
-				{{#each lists}}
-					<a href="#" class="list-group-item">{{name}}</a>
-				{{/each}}
-			</div>
+		<div class="list-group" id="list-group-id">
+			<a href="#" class="list-group-item disabled"><b>Group</b></a>
+			{{#each lists}}
+				<a href="#" class="list-group-item {{selected}}">
+					{{name}}
+					<span class="glyphicon glyphicon-trash pull-right destroy"></span>
+				</a>
+			{{/each}}
 		</div>
 	</div>
 </template>
+
