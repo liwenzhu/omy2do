@@ -1,10 +1,18 @@
 <template name="main_pane">
 	<div class="row">
 		<div class="col-md-3">
-			{{> todos_collection}}
+			{{#if loading}}
+				Loading...
+			{{else}}
+				{{> todos_collection}}
+			{{/if}}
 		</div>
 		<div class="col-md-9">
-			{{> todos_item}}
+			{{#if loading}}
+				Loading...
+			{{else}}
+				{{> todos_item}}
+			{{/if}}
 		</div>
 	</div>
 </template>
