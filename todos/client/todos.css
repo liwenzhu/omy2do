@@ -318,3 +318,7 @@ body {
 #list-group-id .list-group-item:hover .destroy {
     display: initial;
 }
+
+#list-group-id .disabled .btn {
+    margin-top: -5px;
+}

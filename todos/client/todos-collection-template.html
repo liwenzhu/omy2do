@@ -1,7 +1,13 @@
 <template name="todos_collection">
 	<div class="panel panel-default">
 		<div class="list-group" id="list-group-id">
-			<a href="#" class="list-group-item disabled"><b>Group</b></a>
+			<a href="#" class="list-group-item disabled">
+				<b>Group</b>
+				<!-- Button for tragger add group modal -->
+				<button class="btn btn-sm btn-primary btn-group-sm pull-right" data-toggle="modal" data-target="#add-group">
+				<span class="glyphicon glyphicon-plus"></span>
+				</button>
+			</a>
 			{{#each lists}}
 				<a href="#" class="list-group-item {{selected}}">
 					{{name}}
@@ -9,6 +15,24 @@
 				</a>
 			{{/each}}
 		</div>
+	</div>
+	<!-- add group modal -->
+	<div class="modal fade" id="add-group" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title">Add group</h4>
+	      </div>
+	      <div class="modal-body">
+	        <input type="text" class="form-control">
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary" id="btn-add-group">Add</button>
+	      </div>
+	    </div>
+	  </div>
 	</div>
 </template>
 

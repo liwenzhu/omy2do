@@ -11,6 +11,31 @@ var listsHandle = Meteor.subscribe('lists', function () {
   }
 });
 
+var okCancelEvents = function (selector, callbacks) {
+  var ok = callbacks.ok || function () {};
+  var cancel = callbacks.cancel || function () {};
+
+  var events = {};
+  events['keyup '+selector+', keydown '+selector+', focusout '+selector] =
+    function (evt) {
+      if (evt.type === "keydown" && evt.which === 27) {
+        // escape = cancel
+        cancel.call(this, evt);
+
+      } else if (evt.type === "keyup" && evt.which === 13 ||
+                 evt.type === "focusout") {
+        // blur/return/enter = ok/submit if non-empty
+        var value = String(evt.target.value || "");
+        if (value)
+          ok.call(this, value, evt);
+        else
+          cancel.call(this, evt);
+      }
+    };
+
+  return events;
+};
+
 Template.todos_collection.loading = function () {
   return !listsHandle.ready();
 };
@@ -28,8 +53,34 @@ Template.todos_collection.events({
 		var list = Lists.findOne({}, {sort: {name: 1}});
 		if(list)
 			Session.set('list_id', this._id);
+	},
+	'mousedown #btn-add-group': function (evt) {
+		var groupName = $('#add-group .modal-body .form-control').val();
+		var userId = Meteor.userId() || 'public';
+		var id = Lists.insert({name: groupName, owner: userId});
+		Session.set('list_id', id);
+		// close modal
+		$('#add-group .modal-footer button:first-child').click();
+		// clean input value
+		$('#add-group .modal-body .form-control').val("");
+		evt.target.value = "";
 	}
 });
+
+Template.todos_collection.events(okCancelEvents(
+	'#add-group .modal-body .form-control',
+	{
+		ok: function (groupName) {
+			var userId = Meteor.userId() || 'public';
+			var id = Lists.insert({name: groupName, owner: userId});
+			Session.set('list_id', id);
+			// close modal
+			$('#add-group .modal-footer button:first-child').click();
+			// clean input value
+			$('#add-group .modal-body .form-control').val("");
+		}
+	}
+));
 
 Template.todos_collection.selected = function () {
   return Session.equals('list_id', this._id) ? 'active' : '';
