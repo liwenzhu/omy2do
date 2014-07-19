@@ -1,4 +1,4 @@
-* {
+/** {
     padding: 0;
     margin: 0;
 }
@@ -297,3 +297,28 @@ h3 {
     width: 80px;
 }
 
+*/
+
+body {
+    padding-top: 70px;
+}
+
+.bs-home-footer {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    border-top: 1px solid #CCC;
+    width: 95%;
+}
+
+#list-group-id .list-group-item .destroy {
+    display: none;
+}
+
+#list-group-id .list-group-item:hover .destroy {
+    display: initial;
+}
+
+#list-group-id .disabled .btn {
+    margin-top: -5px;
+}

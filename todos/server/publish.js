@@ -14,13 +14,13 @@ Meteor.publish('lists', function () {
 
 Lists.allow({
 	insert: function (userId, doc) {
-		return doc.owner === userId;
+		return doc.owner === userId || doc.owner === 'public';
 	},
 	update: function (userId, doc) {
-		return doc.owner === userId;
+		return doc.owner === userId || doc.owner === 'public';
 	},
 	remove: function (userId, doc) {
-		return doc.owner === userId;
+		return doc.owner === userId || doc.owner === 'public';
 	},
 	fetch: ['owner']
 });
