@@ -70,7 +70,7 @@ Template.todos_collection.events({
 Template.todos_collection.events(okCancelEvents(
 	'#add-group .modal-body .form-control',
 	{
-		ok: function (groupName) {
+		ok: function (groupName, template) {
 			var userId = Meteor.userId() || 'public';
 			var id = Lists.insert({name: groupName, owner: userId});
 			Session.set('list_id', id);

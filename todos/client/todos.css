@@ -319,6 +319,14 @@ body {
     display: initial;
 }
 
+#todos-item-id .list-group-item .destroy {
+    display: none;
+}
+
+#todos-item-id .list-group-item:hover .destroy {
+    display: initial;
+}
+
 #list-group-id .disabled .btn {
     margin-top: -5px;
 }

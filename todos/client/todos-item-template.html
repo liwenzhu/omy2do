@@ -33,28 +33,27 @@
  -->
 <template name="todos_item">
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <div class="panel-title">
-                <p>
-                    <span><b>Todos</b> Show:</span>
-                    <span class="label label-primary">All items (12)</span>
-                    <span class="label label-default">Tech (1)</span>
-                    <span class="label label-default">Apple (2)</span>
-                    <span class="label label-default">Learning (1)</span>
-                    <span class="label label-default">Tech (1)</span>
-                    <span class="label label-default">Tech (1)</span>
-                    <span class="label label-default">Tech (1)</span>
-                </p>
-            </div>
-        </div>
-        <div class="panel-body">
-            <div class="list-group">
-                {{#each todos}}
-                    <a href="#" class="list-group-item">
-                    PP, love you!
-                    </a>
-                {{/each}}
-            </div>
+        <div class="list-group" id="todos-item-id">
+            <a href="#" class="list-group-item disabled">
+                <span><b>Todos</b> Show:</span>
+                <span class="label label-primary">All items (12)</span>
+                <span class="label label-default">Tech (1)</span>
+                <span class="label label-default">Apple (2)</span>
+                <span class="label label-default">Learning (1)</span>
+                <span class="label label-default">Tech (1)</span>
+                <span class="label label-default">Tech (1)</span>
+                <span class="label label-default">Tech (1)</span>
+            <!-- Button for tragger add group modal -->
+            <!-- <button class="btn btn-sm btn-primary btn-group-sm pull-right" data-toggle="modal" data-target="#add-group">
+            <span class="glyphicon glyphicon-plus"></span>
+            </button> -->
+            </a>
+            {{#each todos}}
+                <a href="#" class="list-group-item {{selected}}">
+                    {{text}}
+                    <span class="glyphicon glyphicon-trash pull-right destroy"></span>
+                </a>
+            {{/each}}
         </div>
     </div>
 </template>
