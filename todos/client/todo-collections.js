@@ -2,6 +2,7 @@
 
 // Define Minimongo collections to match server/publish.js.
 Lists = new Meteor.Collection("lists");
+Todos = new Meteor.Collection("todos");
 
 var listsHandle = Meteor.subscribe('lists', function () {
   if (!Session.get('list_id')) {
@@ -45,14 +46,15 @@ Template.todos_collection.lists = function () {
 };
 
 Template.todos_collection.events({
-	'mousedown .list-group-item': function (evt) {
-		Session.set('list_id', this._id);
-	},
 	'mousedown .destroy': function (evt) {
 		Lists.remove(this._id);
-		var list = Lists.findOne({}, {sort: {name: 1}});
-		if(list)
-			Session.set('list_id', this._id);
+		var list = Lists.findOne({name: {$not: this._id}}, {sort: {name: 1}});
+		if (list) 
+			Session.set('list_id', list._id);
+	},
+	'mousedown .list-group-item': function (evt) {
+		console.log('click item');
+		Session.set('list_id', this._id);
 	},
 	'mousedown #btn-add-group': function (evt) {
 		var groupName = $('#add-group .modal-body .form-control').val();
@@ -83,6 +85,7 @@ Template.todos_collection.events(okCancelEvents(
 ));
 
 Template.todos_collection.selected = function () {
+	console.log(Session.equals('list_id', this._id), Session.get('list_id'), this._id)
   return Session.equals('list_id', this._id) ? 'active' : '';
 };
 

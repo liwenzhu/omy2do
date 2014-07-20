@@ -1,4 +1,4 @@
-Todos = new Meteor.Collection("todos");
+
 
 var todosHandle = null;
 // Always be subscribed to the todos for the selected list.

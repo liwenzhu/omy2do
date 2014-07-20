@@ -20,7 +20,13 @@ Lists.allow({
 		return doc.owner === userId || doc.owner === 'public';
 	},
 	remove: function (userId, doc) {
-		return doc.owner === userId || doc.owner === 'public';
+        console.log('remove todos');
+        console.log(Todos.find({'list_id':doc._id}).count());
+        if (doc.owner === userId || doc.owner === 'public') {
+            Todos.remove({'list_id': doc._id});
+            return true;
+        }
+		return false;
 	},
 	fetch: ['owner']
 });
