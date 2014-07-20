@@ -330,3 +330,7 @@ body {
 #list-group-id .disabled .btn {
     margin-top: -5px;
 }
+
+#todos-item-id .disabled .btn {
+    margin-top: -5px;
+}

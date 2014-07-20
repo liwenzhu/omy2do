@@ -20,7 +20,7 @@ Template.todos_item.todos = function () {
 
   var list_id = Session.get('list_id');
   if (!list_id)
-    return {};
+    return [];
 
   var sel = {list_id: list_id};
   // var tag_filter = Session.get('tag_filter');
