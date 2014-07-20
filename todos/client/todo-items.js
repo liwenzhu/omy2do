@@ -35,6 +35,11 @@ var okCancelEvents = function (selector, callbacks) {
   return events;
 };
 
+var activateInput = function (input) {
+    input.focus();
+    input.select();
+};
+
 Template.todos_item.loading = function () {
 	return todosHandle && !todosHandle.ready();
 };
@@ -57,6 +62,10 @@ Template.todos_item.todos = function () {
     return todo_items;
 };
 
+Template.todos_item.editing = function() {
+    return Session.equals('editing_itemname', this._id);
+};
+
 function formatTags(todo) {
     todo.tags = todo.tags.map(function(tag){
         return {'tag': tag};
@@ -65,10 +74,16 @@ function formatTags(todo) {
 }
 
 Template.todos_item.events({
-  'mousedown .destroy': function (evt) {
-    Todos.remove(this._id);
-  },
-  'mousedown #btn-add-item': function (evt) {
+    'mousedown .destroy': function (evt) {
+        Todos.remove(this._id);
+    },
+    'dblclick .list-group-item': function (evt, template) {
+        Session.set('editing_itemname', this._id);
+        Deps.flush(); // force DOM redraw, so we can focus the edit field
+        console.log(template.find("#list-group-item-input"))
+        activateInput(template.find("#list-group-item-input"));
+    },
+    'mousedown #btn-add-item': function (evt) {
     var itemName = $('#add-item .modal-body .form-control').val();
     var tag = Session.get('tag_filter');
     Todos.insert({
@@ -83,7 +98,7 @@ Template.todos_item.events({
     // clean input value
     $('#add-item .modal-body .form-control').val("");
     evt.target.value = "";
-  }
+    }
 });
 
 Template.todos_item.events(okCancelEvents(
@@ -104,6 +119,19 @@ Template.todos_item.events(okCancelEvents(
         $('#add-item .modal-body .form-control').val("");
     }
   }
+));
+
+Template.todos_item.events(okCancelEvents(
+    '#list-group-item-input',
+    {
+        ok: function (itemName) {
+            Todos.update(this._id, {$set: {text: itemName}});
+            Session.set('editing_itemname', null);
+        },
+        cancel: function () {
+            Session.set('editing_itemname', null);
+        }
+    }
 ));
 
 

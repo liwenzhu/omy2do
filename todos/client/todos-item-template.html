@@ -54,20 +54,24 @@
             {{#each todos}}
                 <li href="#" class="list-group-item {{selected}}">
                     <div>
-                    <span class="glyphicon glyphicon-trash pull-left destroy"></span>
-                    &nbsp;
-                    <span>
-                    {{text}}
-                    </span>
-                    <span class="label label-default pull-right">
-                        +tag
-                    </span>
-                    {{#each tags}}
-                        <span class="label label-default pull-right">
-                            {{tag}}
-                            &nbsp;<span class="glyphicon glyphicon-remove"></span>
-                        </span>&nbsp;
-                    {{/each}}
+                        {{#if editing}}
+                            <input type="text" class="form-control" id="list-group-item-input" placeholder="Item name">
+                        {{else}}
+                            <span class="glyphicon glyphicon-trash pull-left destroy"></span>
+                        &nbsp;
+                            <span>
+                            {{text}}
+                            </span>
+                            <span class="label label-default pull-right">
+                            +tag
+                            </span>
+                            {{#each tags}}
+                                <span class="label label-default pull-right">
+                                    {{tag}}
+                                    &nbsp;<span class="glyphicon glyphicon-remove"></span>
+                                </span>&nbsp;
+                            {{/each}}
+                        {{/if}}
                     </div>
                 </li>
             {{/each }}

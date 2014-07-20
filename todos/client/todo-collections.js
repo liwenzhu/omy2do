@@ -37,6 +37,12 @@ var okCancelEvents = function (selector, callbacks) {
   return events;
 };
 
+
+var activateInput = function (input) {
+	input.focus();
+	input.select();
+};
+
 Template.todos_collection.loading = function () {
   return !listsHandle.ready();
 };
@@ -45,12 +51,25 @@ Template.todos_collection.lists = function () {
   return Lists.find({}, {sort: {name: 1}});
 };
 
+Template.todos_collection.selected = function () {
+  return Session.equals('list_id', this._id) ? 'active' : '';
+};
+
+Template.todos_collection.editing = function () {
+	return Session.equals('editing_listname', this._id);
+};
+
 Template.todos_collection.events({
 	'mousedown .destroy': function (evt) {
 		Lists.remove(this._id);
 		var list = Lists.findOne({name: {$not: this._id}}, {sort: {name: 1}});
 		if (list) 
 			Session.set('list_id', list._id);
+	},
+	'dblclick .list-group-item': function (evt, template) {
+		Session.set('editing_listname', this._id);
+		Deps.flush(); // force DOM redraw, so we can focus the edit field
+		activateInput(template.find("#list-group-input"));
 	},
 	'mousedown .list-group-item': function (evt) {
 		Session.set('list_id', this._id);
@@ -83,9 +102,18 @@ Template.todos_collection.events(okCancelEvents(
 	}
 ));
 
-Template.todos_collection.selected = function () {
-  return Session.equals('list_id', this._id) ? 'active' : '';
-};
+Template.todos_collection.events(okCancelEvents(
+	'#list-group-input',
+	{
+		ok: function (groupName) {
+			Lists.update(this._id, {$set: {name: groupName}});
+      		Session.set('editing_listname', null);
+		},
+		cancel: function () {
+			Session.set('editing_listname', null);
+		}
+	}
+));
 
 // Router = new TodosRouter;
 
