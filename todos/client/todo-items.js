@@ -10,6 +10,31 @@ Deps.autorun(function () {
     todosHandle = null;
 });
 
+var okCancelEvents = function (selector, callbacks) {
+  var ok = callbacks.ok || function () {};
+  var cancel = callbacks.cancel || function () {};
+
+  var events = {};
+  events['keyup '+selector+', keydown '+selector+', focusout '+selector] =
+    function (evt) {
+      if (evt.type === "keydown" && evt.which === 27) {
+        // escape = cancel
+        cancel.call(this, evt);
+
+      } else if (evt.type === "keyup" && evt.which === 13 ||
+                 evt.type === "focusout") {
+        // blur/return/enter = ok/submit if non-empty
+        var value = String(evt.target.value || "");
+        if (value)
+          ok.call(this, value, evt);
+        else
+          cancel.call(this, evt);
+      }
+    };
+
+  return events;
+};
+
 Template.todos_item.loading = function () {
 	return todosHandle && !todosHandle.ready();
 };
@@ -29,6 +54,49 @@ Template.todos_item.todos = function () {
 
   return Todos.find(sel, {sort: {timestamp: -1}});
 };
+
+Template.todos_item.events({
+  'mousedown .destroy': function (evt) {
+    Todos.remove(this._id);
+  },
+  'mousedown #btn-add-item': function (evt) {
+    var itemName = $('#add-item .modal-body .form-control').val();
+    var tag = Session.get('tag_filter');
+    Todos.insert({
+        text: itemName,
+        list_id: Session.get('list_id'),
+        done: false,
+        timestamp: (new Date()).getTime(),
+        tags: tag ? [tag] : []
+    });
+    // close modal
+    $('#add-item .modal-footer button:first-child').click();
+    // clean input value
+    $('#add-item .modal-body .form-control').val("");
+    evt.target.value = "";
+  }
+});
+
+Template.todos_item.events(okCancelEvents(
+  '#add-item .modal-body .form-control',
+  {
+    ok: function (itemName, template) {
+        var tag = Session.get('tag_filter');
+        Todos.insert({
+            text: itemName,
+            list_id: Session.get('list_id'),
+            done: false,
+            timestamp: (new Date()).getTime(),
+            tags: tag ? [tag] : []
+        });
+        // close modal
+        $('#add-item .modal-footer button:first-child').click();
+        // clean input value
+        $('#add-item .modal-body .form-control').val("");
+    }
+  }
+));
+
 
 // ////////// Todos //////////
 

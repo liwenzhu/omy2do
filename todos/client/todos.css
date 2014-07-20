@@ -303,6 +303,14 @@ body {
     padding-top: 70px;
 }
 
+.show {
+    display: initial;
+}
+
+.hide {
+    display: none;
+}
+
 .bs-home-footer {
     margin-left: auto;
     margin-right: auto;
