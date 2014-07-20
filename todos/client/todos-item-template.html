@@ -42,7 +42,7 @@
                 </button>
             </li>
             <li class="list-group-item">
-                <span> Show: </span>
+                <span> Tags: </span>
                 <button class="btn btn-xs btn-primary">All items (12)</button>
                 <button class="btn btn-xs btn-default">Tech (1)</button>
                 <button class="btn btn-xs btn-default">Apple (2)</button>
@@ -53,8 +53,22 @@
             </li>
             {{#each todos}}
                 <li href="#" class="list-group-item {{selected}}">
+                    <div>
+                    <span class="glyphicon glyphicon-trash pull-left destroy"></span>
+                    &nbsp;
+                    <span>
                     {{text}}
-                    <span class="glyphicon glyphicon-trash pull-right destroy"></span>
+                    </span>
+                    <span class="label label-default pull-right">
+                        +tag
+                    </span>
+                    {{#each tags}}
+                        <span class="label label-default pull-right">
+                            {{tag}}
+                            &nbsp;<span class="glyphicon glyphicon-remove"></span>
+                        </span>&nbsp;
+                    {{/each}}
+                    </div>
                 </li>
             {{/each }}
         </ul>

@@ -40,20 +40,29 @@ Template.todos_item.loading = function () {
 };
 
 Template.todos_item.todos = function () {
-  // Determine which todos to display in main pane,
-  // selected based on list_id and tag_filter.
+    // Determine which todos to display in main pane,
+    // selected based on list_id and tag_filter.
 
-  var list_id = Session.get('list_id');
-  if (!list_id)
+    var list_id = Session.get('list_id');
+    if (!list_id)
     return [];
 
-  var sel = {list_id: list_id};
-  // var tag_filter = Session.get('tag_filter');
-  // if (tag_filter)
-  //   sel.tags = tag_filter;
+    var sel = {list_id: list_id};
+    // var tag_filter = Session.get('tag_filter');
+    // if (tag_filter)
+    //   sel.tags = tag_filter;
 
-  return Todos.find(sel, {sort: {timestamp: -1}});
+    var todo_items = Todos.find(sel, {sort: {timestamp: -1}});
+    todo_items = todo_items.map(formatTags);
+    return todo_items;
 };
+
+function formatTags(todo) {
+    todo.tags = todo.tags.map(function(tag){
+        return {'tag': tag};
+    });
+    return todo;
+}
 
 Template.todos_item.events({
   'mousedown .destroy': function (evt) {

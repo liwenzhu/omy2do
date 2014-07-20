@@ -328,11 +328,16 @@ body {
 }
 
 #todos-item-id .list-group-item .destroy {
-    display: none;
+    visibility: hidden;
 }
 
 #todos-item-id .list-group-item:hover .destroy {
-    display: initial;
+    visibility: initial;
+    cursor: pointer;
+}
+
+#todos-item-id .list-group-item .label {
+    margin-right: 5px;
 }
 
 #list-group-id .disabled .btn {
