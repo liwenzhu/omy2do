@@ -10,8 +10,12 @@
 			</a>
 			{{#each lists}}
 				<a href="#" class="list-group-item {{selected}}">
-					{{name}}
-					<span class="glyphicon glyphicon-trash pull-right destroy"></span>
+					{{#if editing}}
+						<input type="text" class="form-control" id="list-group-input" placeholder="Group name">
+					{{else}}
+						{{name}}
+						<span class="glyphicon glyphicon-trash pull-right destroy"></span>
+					{{/if}}
 				</a>
 			{{/each}}
 		</div>

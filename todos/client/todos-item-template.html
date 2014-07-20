@@ -33,28 +33,66 @@
  -->
 <template name="todos_item">
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <div class="panel-title">
-                <p>
-                    <span><b>Todos</b> Show:</span>
-                    <span class="label label-primary">All items (12)</span>
-                    <span class="label label-default">Tech (1)</span>
-                    <span class="label label-default">Apple (2)</span>
-                    <span class="label label-default">Learning (1)</span>
-                    <span class="label label-default">Tech (1)</span>
-                    <span class="label label-default">Tech (1)</span>
-                    <span class="label label-default">Tech (1)</span>
-                </p>
-            </div>
+        <ul class="list-group" id="todos-item-id">
+            <li class="list-group-item disabled">
+                <span><b>Todos</b></span>
+            <!-- Button for tragger add group modal -->
+                <button class="btn btn-sm btn-primary btn-group-sm pull-right" data-toggle="modal" data-target="#add-item">
+                <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </li>
+            <li class="list-group-item">
+                <span> Tags: </span>
+                <button class="btn btn-xs btn-primary">All items (12)</button>
+                <button class="btn btn-xs btn-default">Tech (1)</button>
+                <button class="btn btn-xs btn-default">Apple (2)</button>
+                <button class="btn btn-xs btn-default">Learning (1)</button>
+                <button class="btn btn-xs btn-default">Tech (1)</button>
+                <button class="btn btn-xs btn-default">Tech (1)</button>
+                <button class="btn btn-xs btn-default">Tech (1)</button>
+            </li>
+            {{#each todos}}
+                <li href="#" class="list-group-item {{selected}}">
+                    <div>
+                        {{#if editing}}
+                            <input type="text" class="form-control" id="list-group-item-input" placeholder="Item name">
+                        {{else}}
+                            <span class="glyphicon glyphicon-trash pull-left destroy"></span>
+                        &nbsp;
+                            <span>
+                            {{text}}
+                            </span>
+                            <span class="label label-default pull-right">
+                            +tag
+                            </span>
+                            {{#each tags}}
+                                <span class="label label-default pull-right">
+                                    {{tag}}
+                                    &nbsp;<span class="glyphicon glyphicon-remove"></span>
+                                </span>&nbsp;
+                            {{/each}}
+                        {{/if}}
+                    </div>
+                </li>
+            {{/each }}
+        </ul>
+    </div>
+    <!-- add group modal -->
+    <div class="modal fade" id="add-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title">Add todo</h4>
+          </div>
+          <div class="modal-body">
+            <input type="text" class="form-control">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="btn-add-item">Add</button>
+          </div>
         </div>
-        <div class="panel-body">
-            <div class="list-group">
-                {{#each todos}}
-                    <a href="#" class="list-group-item">
-                    PP, love you!
-                    </a>
-                {{/each}}
-            </div>
-        </div>
+      </div>
     </div>
 </template>
