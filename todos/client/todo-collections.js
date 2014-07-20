@@ -53,7 +53,6 @@ Template.todos_collection.events({
 			Session.set('list_id', list._id);
 	},
 	'mousedown .list-group-item': function (evt) {
-		console.log('click item');
 		Session.set('list_id', this._id);
 	},
 	'mousedown #btn-add-group': function (evt) {
@@ -85,7 +84,6 @@ Template.todos_collection.events(okCancelEvents(
 ));
 
 Template.todos_collection.selected = function () {
-	console.log(Session.equals('list_id', this._id), Session.get('list_id'), this._id)
   return Session.equals('list_id', this._id) ? 'active' : '';
 };
 
