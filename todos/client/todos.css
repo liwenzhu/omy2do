@@ -300,7 +300,7 @@ h3 {
 */
 
 body {
-    padding-top: 70px;
+    padding-top: 52px;
 }
 
 .show {
@@ -346,4 +346,8 @@ body {
 
 #todos-item-id .disabled .btn {
     margin-top: -5px;
+}
+
+.form-signin .form-control {
+    margin-bottom: 10px;
 }
