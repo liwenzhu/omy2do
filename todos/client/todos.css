@@ -300,7 +300,11 @@ h3 {
 */
 
 body {
-    padding-top: 52px;
+    padding-top: 70px;
+}
+
+.jumbotron {
+    margin-top: -18px;
 }
 
 .show {
@@ -350,4 +354,13 @@ body {
 
 .form-signin .form-control {
     margin-bottom: 10px;
+}
+
+.navbar-form span {
+    margin-right: 10px;
+    color: white;
+}
+
+.form-signin span {
+    color: red;
 }

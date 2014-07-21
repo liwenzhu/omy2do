@@ -12,3 +12,7 @@ Session.setDefault('editing_listname', null);
 
 // When editing todo text, ID of the todo
 Session.setDefault('editing_itemname', null);
+
+Session.setDefault('error_message', null);
+
+Session.set('error_message_signin', null);

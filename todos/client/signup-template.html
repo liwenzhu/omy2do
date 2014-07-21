@@ -1,22 +1,31 @@
 <template name="signup">
 	{{#if userNotLogin}}
-		<div class="row">
-			<div class="col-md-8">
-				<h1>
-					Enjoy your life!
-				</h1>
-				<p>
-					Easy to manage your todo list with omy2do.
-				</p>
+		<div class="jumbotron">
+			{{#if error_message}}
+			<div class="alert alert-danger" role="alert">
+				<strong>{{error_message}}</strong>
 			</div>
-			<div class="col-md-4">
-				<form class="form-signin" role="form">
-					<input type="email" class="form-control" placeholder="Email" required>
-					<input type="password" class="form-control" placeholder="Password" required>
-					<button class="btn btn-lg btn-success btn-block" type="submit">
-						Sign up
-					</button>
-				</form>
+			{{/if}}
+    		<div class="container">
+				<div class="row">
+					<div class="col-md-8">
+						<h1>
+							Enjoy your life!
+						</h1>
+						<p>
+							Easy to manage your todo list with omy2do.
+						</p>
+					</div>
+					<div class="col-md-4">
+						<form class="form-signin" role="form" method="post" onsubmit="return false;">
+							<input type="email" class="form-control" placeholder="Email" required>
+							<input type="password" class="form-control" placeholder="Password" required>
+							<button class="btn btn-lg btn-success btn-block" type="submit">
+								Sign up
+							</button>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	{{else}}

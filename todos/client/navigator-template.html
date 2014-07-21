@@ -7,18 +7,29 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">Omy2do</a>
+			<a class="navbar-brand" href="#">Omy2do (Beta2)</a>
 		</div>
 		<div class="collapse navbar-collapse">
-			<form class="navbar-form navbar-right" role="form">
-				<div class="form-group">
-					<input type="text" placeholder="Email" name="email" class="form-control">
+			{{#if login}}
+				<div class="navbar-form navbar-right">
+					<span>{{username}}</span>
+					<button class="btn btn-sm btn-success" id="btn-signout">Sign out</button>
 				</div>
-				<div class="form-group">
-					<input type="password" placeholder="Password" name="password" class="form-control">
-				</div>
-				<button type="submit" class="btn btn-success">Sign in</button>
-			</form>
+			{{else}}
+				<form class="navbar-form navbar-right" role="form" method="post" onsubmit="return false;">
+					<div class="form-group">
+						<input type="text" placeholder="Email" name="email" class="form-control">
+						<input type="password" placeholder="Password" name="password" class="form-control">
+					</div>
+					<button type="submit" class="btn btn-success" id="btn-signin">Sign in</button>
+				</form>
+				
+			{{/if}}
 		</div>
+		{{#if signinError}}
+			<div class="alert alert-danger" role="alert">
+				<strong>{{signinError}}</strong>
+			</div>
+		{{/if}}
 	</div>
 </template>
