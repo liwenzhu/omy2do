@@ -41,15 +41,16 @@
                 <span class="glyphicon glyphicon-plus"></span>
                 </button>
             </li>
-            <li class="list-group-item">
+            <li class="list-group-item" id='tag_filter'>
                 <span> Tags: </span>
-                <button class="btn btn-xs btn-primary">All items (12)</button>
-                <button class="btn btn-xs btn-default">Tech (1)</button>
-                <button class="btn btn-xs btn-default">Apple (2)</button>
-                <button class="btn btn-xs btn-default">Learning (1)</button>
-                <button class="btn btn-xs btn-default">Tech (1)</button>
-                <button class="btn btn-xs btn-default">Tech (1)</button>
-                <button class="btn btn-xs btn-default">Tech (1)</button>
+                {{#each filter_tags}}
+                  <button class="btn btn-xs {{filter_selected}}">
+                    {{tag}}
+                    <span class="badge">
+                      {{count}}
+                    </span>
+                  </button>
+                {{/each}}
             </li>
             {{#each todos}}
                 <li href="#" class="list-group-item {{selected}}">
@@ -58,17 +59,18 @@
                             <input type="text" class="form-control" id="list-group-item-input" placeholder="Item name">
                         {{else}}
                             <span class="glyphicon glyphicon-trash pull-left destroy"></span>
-                        &nbsp;
-                            <span>
+                            &nbsp;
+                            <input class="check" type="checkbox" checked="{{done}}"> 
+                            <span class="{{done}}">
                             {{text}}
                             </span>
-                            <span class="label label-default pull-right">
-                            +tag
-                            </span>
+                            <button class="btn btn-xs btn-primary btn-group-sm pull-right" data-toggle="modal" data-target="#add-tag" id="btn-new-tag">
+                              +tag
+                            </button>
                             {{#each tags}}
                                 <span class="label label-default pull-right">
                                     {{tag}}
-                                    &nbsp;<span class="glyphicon glyphicon-remove"></span>
+                                    &nbsp;<span class="glyphicon glyphicon-remove tag-destroy"></span>
                                 </span>&nbsp;
                             {{/each}}
                         {{/if}}
@@ -91,6 +93,24 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary" id="btn-add-item">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- add tag modal -->
+    <div class="modal fade" id="add-tag" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title">Add tag</h4>
+          </div>
+          <div class="modal-body">
+            <input type="text" class="form-control">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="btn-add-tag">Add</button>
           </div>
         </div>
       </div>

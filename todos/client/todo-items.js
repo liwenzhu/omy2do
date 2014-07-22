@@ -53,9 +53,9 @@ Template.todos_item.todos = function () {
     return [];
 
     var sel = {list_id: list_id};
-    // var tag_filter = Session.get('tag_filter');
-    // if (tag_filter)
-    //   sel.tags = tag_filter;
+    var tag_filter = Session.get('tag_filter');
+    if (tag_filter && tag_filter != 'All items')
+      sel.tags = tag_filter;
 
     var todo_items = Todos.find(sel, {sort: {timestamp: -1}});
     todo_items = todo_items.map(formatTags);
@@ -68,36 +68,65 @@ Template.todos_item.editing = function() {
 
 function formatTags(todo) {
     todo.tags = todo.tags.map(function(tag){
-        return {'tag': tag};
+        return {'tag': tag, 'todo_id':todo._id};
     });
     return todo;
-}
+};
 
 Template.todos_item.events({
     'mousedown .destroy': function (evt) {
         Todos.remove(this._id);
     },
+    'click #btn-new-tag': function (evt) {
+        Session.set('editing_addtag', this._id)
+    },
     'dblclick .list-group-item': function (evt, template) {
         Session.set('editing_itemname', this._id);
         Deps.flush(); // force DOM redraw, so we can focus the edit field
-        console.log(template.find("#list-group-item-input"))
         activateInput(template.find("#list-group-item-input"));
     },
     'mousedown #btn-add-item': function (evt) {
-    var itemName = $('#add-item .modal-body .form-control').val();
-    var tag = Session.get('tag_filter');
-    Todos.insert({
-        text: itemName,
-        list_id: Session.get('list_id'),
-        done: false,
-        timestamp: (new Date()).getTime(),
-        tags: tag ? [tag] : []
-    });
-    // close modal
-    $('#add-item .modal-footer button:first-child').click();
-    // clean input value
-    $('#add-item .modal-body .form-control').val("");
-    evt.target.value = "";
+        var itemName = $('#add-item .modal-body .form-control').val();
+        var tag = Session.get('tag_filter');
+        Todos.insert({
+            text: itemName,
+            list_id: Session.get('list_id'),
+            done: false,
+            timestamp: (new Date()).getTime(),
+            tags: tag ? [tag] : []
+        });
+        // close modal
+        $('#add-item .modal-footer button:first-child').click();
+        // clean input value
+        $('#add-item .modal-body .form-control').val("");
+        evt.target.value = "";
+    },
+    'click #btn-add-tag': function (evt) {
+        var value = $('#add-tag .modal-body .form-control').val();
+        var id= Session.get('editing_addtag');
+        Todos.update(id, {$addToSet: {tags: value}});
+        Session.set('editing_addtag', null);
+        // close modal
+        $('#add-tag .modal-footer button:first-child').click();
+        // clean input value
+        $('#add-tag .modal-body .form-control').val("");
+        evt.target.value = "";
+    },
+    'click #tag_filter .btn': function (evt) {
+        Session.set('tag_filter', this.tag);
+    },
+    'click .tag-destroy': function (evt) {
+        var tag = this.tag;
+        var id = this.todo_id;
+
+        // evt.target.parentNode.style.opacity = 0;
+        // wait for CSS animation to finish
+        Meteor.setTimeout(function () {
+            Todos.update({_id: id}, {$pull: {tags: tag}});
+        }, 300);
+    },
+    'click .check': function (evt) {
+        Todos.update(this._id, {$set: {done: !this.done}});
     }
 });
 
@@ -122,6 +151,21 @@ Template.todos_item.events(okCancelEvents(
 ));
 
 Template.todos_item.events(okCancelEvents(
+  '#add-tag .modal-body .form-control',
+  {
+    ok: function (value, template) {
+        var id= Session.get('editing_addtag');
+        Todos.update(id, {$addToSet: {tags: value}});
+        Session.set('editing_addtag', null);
+        // close modal
+        $('#add-tag .modal-footer button:first-child').click();
+        // clean input value
+        $('#add-tag .modal-body .form-control').val("");
+    }
+  }
+));
+
+Template.todos_item.events(okCancelEvents(
     '#list-group-item-input',
     {
         ok: function (itemName) {
@@ -133,6 +177,33 @@ Template.todos_item.events(okCancelEvents(
         }
     }
 ));
+
+// ////////// Tag Filter //////////
+
+// Pick out the unique tags from all todos in current list.
+Template.todos_item.filter_tags = function () {
+    var tag_infos = [];
+    var total_count = 0;
+
+    Todos.find({list_id: Session.get('list_id')}).forEach(function (todo) {
+        _.each(todo.tags, function (tag) {
+            var tag_info = _.find(tag_infos, function (x) { return x.tag === tag; });
+            if (! tag_info)
+                tag_infos.push({tag: tag, count: 1});
+            else
+                tag_info.count++;
+        });
+        total_count++;
+    });
+
+    tag_infos = _.sortBy(tag_infos, function (x) { return x.tag; });
+    tag_infos.unshift({tag: 'All items', count: total_count});
+    return tag_infos;
+};
+
+Template.todos_item.filter_selected = function () {
+    return Session.equals('tag_filter', this.tag) ? 'btn-primary' : '';
+};
 
 
 // ////////// Todos //////////

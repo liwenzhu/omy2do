@@ -364,3 +364,11 @@ body {
 .form-signin span {
     color: red;
 }
+
+.tag-destroy:hover {
+    cursor: pointer;
+}
+
+.true {
+    text-decoration: line-through;
+}
