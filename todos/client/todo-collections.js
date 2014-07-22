@@ -73,6 +73,7 @@ Template.todos_collection.events({
 	},
 	'mousedown .list-group-item': function (evt) {
 		Session.set('list_id', this._id);
+		Session.set('tag_filter', 'All items');
 	},
 	'mousedown #btn-add-group': function (evt) {
 		var groupName = $('#add-group .modal-body .form-control').val();

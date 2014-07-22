@@ -41,15 +41,16 @@
                 <span class="glyphicon glyphicon-plus"></span>
                 </button>
             </li>
-            <li class="list-group-item">
+            <li class="list-group-item" id='tag_filter'>
                 <span> Tags: </span>
-                <button class="btn btn-xs btn-primary">All items (12)</button>
-                <button class="btn btn-xs btn-default">Tech (1)</button>
-                <button class="btn btn-xs btn-default">Apple (2)</button>
-                <button class="btn btn-xs btn-default">Learning (1)</button>
-                <button class="btn btn-xs btn-default">Tech (1)</button>
-                <button class="btn btn-xs btn-default">Tech (1)</button>
-                <button class="btn btn-xs btn-default">Tech (1)</button>
+                {{#each tags}}
+                  <button class="btn btn-xs {{filter_selected}}">
+                    {{tag}}
+                    <span class="badge">
+                      {{count}}
+                    </span>
+                  </button>
+                {{/each}}
             </li>
             {{#each todos}}
                 <li href="#" class="list-group-item {{selected}}">
