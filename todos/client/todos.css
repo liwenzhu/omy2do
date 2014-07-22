@@ -368,3 +368,7 @@ body {
 .tag-destroy:hover {
     cursor: pointer;
 }
+
+.true {
+    text-decoration: line-through;
+}

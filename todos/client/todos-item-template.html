@@ -59,8 +59,9 @@
                             <input type="text" class="form-control" id="list-group-item-input" placeholder="Item name">
                         {{else}}
                             <span class="glyphicon glyphicon-trash pull-left destroy"></span>
-                        &nbsp;
-                            <span>
+                            &nbsp;
+                            <input class="check" type="checkbox" checked="{{done}}"> 
+                            <span class="{{done}}">
                             {{text}}
                             </span>
                             <button class="btn btn-xs btn-primary btn-group-sm pull-right" data-toggle="modal" data-target="#add-tag" id="btn-new-tag">

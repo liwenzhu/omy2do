@@ -66,13 +66,12 @@ Template.todos_item.editing = function() {
     return Session.equals('editing_itemname', this._id);
 };
 
-
 function formatTags(todo) {
     todo.tags = todo.tags.map(function(tag){
         return {'tag': tag, 'todo_id':todo._id};
     });
     return todo;
-}
+};
 
 Template.todos_item.events({
     'mousedown .destroy': function (evt) {
@@ -125,6 +124,9 @@ Template.todos_item.events({
         Meteor.setTimeout(function () {
             Todos.update({_id: id}, {$pull: {tags: tag}});
         }, 300);
+    },
+    'click .check': function (evt) {
+        Todos.update(this._id, {$set: {done: !this.done}});
     }
 });
 
