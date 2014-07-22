@@ -43,7 +43,7 @@
             </li>
             <li class="list-group-item" id='tag_filter'>
                 <span> Tags: </span>
-                {{#each tags}}
+                {{#each filter_tags}}
                   <button class="btn btn-xs {{filter_selected}}">
                     {{tag}}
                     <span class="badge">
@@ -63,13 +63,13 @@
                             <span>
                             {{text}}
                             </span>
-                            <span class="label label-default pull-right">
-                            +tag
-                            </span>
+                            <button class="btn btn-xs btn-primary btn-group-sm pull-right" data-toggle="modal" data-target="#add-tag">
+                              +tag
+                            </button>
                             {{#each tags}}
                                 <span class="label label-default pull-right">
                                     {{tag}}
-                                    &nbsp;<span class="glyphicon glyphicon-remove"></span>
+                                    &nbsp;<span class="glyphicon glyphicon-remove tag-destroy"></span>
                                 </span>&nbsp;
                             {{/each}}
                         {{/if}}
@@ -85,6 +85,24 @@
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             <h4 class="modal-title">Add todo</h4>
+          </div>
+          <div class="modal-body">
+            <input type="text" class="form-control">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="btn-add-item">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- add tag modal -->
+    <div class="modal fade" id="add-tag" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title">Add tag</h4>
           </div>
           <div class="modal-body">
             <input type="text" class="form-control">

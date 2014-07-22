@@ -101,6 +101,9 @@ Template.todos_item.events({
     },
     'click #tag_filter .btn': function (evt) {
         Session.set('tag_filter', this.tag);
+    },
+    'click .tag-destroy': function (evt) {
+        console.log('remove tag');
     }
 });
 
@@ -140,7 +143,7 @@ Template.todos_item.events(okCancelEvents(
 // ////////// Tag Filter //////////
 
 // Pick out the unique tags from all todos in current list.
-Template.todos_item.tags = function () {
+Template.todos_item.filter_tags = function () {
     var tag_infos = [];
     var total_count = 0;
 

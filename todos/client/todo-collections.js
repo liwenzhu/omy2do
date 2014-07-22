@@ -75,6 +75,11 @@ Template.todos_collection.events({
 		Session.set('list_id', this._id);
 		Session.set('tag_filter', 'All items');
 	},
+	'click .list-group .btn': function (evt, template) {
+		// need finish
+		console.log(template.$('#input-add-group'));
+		activateInput(template.find('#input-add-group'));
+	},
 	'mousedown #btn-add-group': function (evt) {
 		var groupName = $('#add-group .modal-body .form-control').val();
 		var userId = Meteor.userId() || 'public';
