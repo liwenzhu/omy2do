@@ -69,7 +69,7 @@ Template.todos_item.editing = function() {
 
 function formatTags(todo) {
     todo.tags = todo.tags.map(function(tag){
-        return {'tag': tag};
+        return {'tag': tag, 'todo_id':todo._id};
     });
     return todo;
 }
@@ -77,6 +77,9 @@ function formatTags(todo) {
 Template.todos_item.events({
     'mousedown .destroy': function (evt) {
         Todos.remove(this._id);
+    },
+    'click #btn-new-tag': function (evt) {
+        Session.set('editing_addtag', this._id)
     },
     'dblclick .list-group-item': function (evt, template) {
         Session.set('editing_itemname', this._id);
@@ -99,11 +102,29 @@ Template.todos_item.events({
         $('#add-item .modal-body .form-control').val("");
         evt.target.value = "";
     },
+    'click #btn-add-tag': function (evt) {
+        var value = $('#add-tag .modal-body .form-control').val();
+        var id= Session.get('editing_addtag');
+        Todos.update(id, {$addToSet: {tags: value}});
+        Session.set('editing_addtag', null);
+        // close modal
+        $('#add-tag .modal-footer button:first-child').click();
+        // clean input value
+        $('#add-tag .modal-body .form-control').val("");
+        evt.target.value = "";
+    },
     'click #tag_filter .btn': function (evt) {
         Session.set('tag_filter', this.tag);
     },
     'click .tag-destroy': function (evt) {
-        console.log('remove tag');
+        var tag = this.tag;
+        var id = this.todo_id;
+
+        // evt.target.parentNode.style.opacity = 0;
+        // wait for CSS animation to finish
+        Meteor.setTimeout(function () {
+            Todos.update({_id: id}, {$pull: {tags: tag}});
+        }, 300);
     }
 });
 
@@ -123,6 +144,21 @@ Template.todos_item.events(okCancelEvents(
         $('#add-item .modal-footer button:first-child').click();
         // clean input value
         $('#add-item .modal-body .form-control').val("");
+    }
+  }
+));
+
+Template.todos_item.events(okCancelEvents(
+  '#add-tag .modal-body .form-control',
+  {
+    ok: function (value, template) {
+        var id= Session.get('editing_addtag');
+        Todos.update(id, {$addToSet: {tags: value}});
+        Session.set('editing_addtag', null);
+        // close modal
+        $('#add-tag .modal-footer button:first-child').click();
+        // clean input value
+        $('#add-tag .modal-body .form-control').val("");
     }
   }
 ));
