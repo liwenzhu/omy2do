@@ -383,3 +383,11 @@ input[type=checkbox] {
 .true {
     text-decoration: line-through;
 }
+
+.donate {
+    display: inline;
+}
+
+.donate input {
+    margin-top: 5px;
+}
