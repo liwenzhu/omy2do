@@ -369,6 +369,10 @@ body {
     cursor: pointer;
 }
 
+.check {
+    margin-right: 2px;
+}
+
 input[type=checkbox] {
     margin: 0 0;
 }
