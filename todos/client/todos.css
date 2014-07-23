@@ -370,7 +370,10 @@ body {
 }
 
 .check {
-    margin-right: 2px;
+    -ms-transform: scale(2); /* IE */
+    -moz-transform: scale(2); /* FF */
+    -webkit-transform: scale(2); /* Safari and Chrome */
+    -o-transform: scale(2); /* Opera */
 }
 
 input[type=checkbox] {
