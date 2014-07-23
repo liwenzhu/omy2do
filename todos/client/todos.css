@@ -369,6 +369,25 @@ body {
     cursor: pointer;
 }
 
+.check {
+    width: 40px;
+    height: 20px;
+    display: inline;
+    float: left;
+}
+
+input[type=checkbox] {
+    margin: 0 0;
+}
+
 .true {
     text-decoration: line-through;
+}
+
+.donate {
+    display: inline;
+}
+
+.donate input {
+    margin-top: 5px;
 }

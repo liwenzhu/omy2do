@@ -24,7 +24,6 @@ Template.signup.events({
 				Deps.flush();
 			} else {
 				Session.set('error_message', null);
-				console.log(email);	
 			}
 		});
 	}

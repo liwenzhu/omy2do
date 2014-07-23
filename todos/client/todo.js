@@ -16,3 +16,9 @@ Session.setDefault('editing_itemname', null);
 Session.setDefault('error_message', null);
 
 Session.set('error_message_signin', null);
+
+Deps.autorun(function(){
+	var list = Lists.findOne({}, {sort: {name: 1}});
+    if (list)
+      Session.set('list_id', list._id);
+});

@@ -17,8 +17,6 @@ Template.navigator.events({
 	'click #btn-signin': function(evt, template) {
 		var username = template.$('.form-control')[0].value;
 		var password = template.$('.form-control')[1].value;
-		console.log('username:', username);
-		console.log('password:', password);
 		Meteor.loginWithPassword(username, password, function(error){
 			if(error)
 				Session.set('error_message_signin', 'Incorrect username or password.'); 
