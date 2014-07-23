@@ -88,6 +88,8 @@ Template.todos_item.events({
     'mousedown #btn-add-item': function (evt) {
         var itemName = $('#add-item .modal-body .form-control').val();
         var tag = Session.get('tag_filter');
+        if (tag === "All items")
+            tag = null;
         Todos.insert({
             text: itemName,
             list_id: Session.get('list_id'),
@@ -103,6 +105,7 @@ Template.todos_item.events({
     },
     'click #btn-add-tag': function (evt) {
         var value = $('#add-tag .modal-body .form-control').val();
+        console.log('value', value);
         var id= Session.get('editing_addtag');
         Todos.update(id, {$addToSet: {tags: value}});
         Session.set('editing_addtag', null);
@@ -135,6 +138,8 @@ Template.todos_item.events(okCancelEvents(
   {
     ok: function (itemName, template) {
         var tag = Session.get('tag_filter');
+        if (tag === "All items")
+            tag = null;
         Todos.insert({
             text: itemName,
             list_id: Session.get('list_id'),
